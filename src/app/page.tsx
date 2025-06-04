@@ -3,77 +3,36 @@
 import React, { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { z } from "zod";
+import { borrowerSchema, BorrowerFormData, ApiError } from "@/lib/schemas";
 import { FiUser, FiMail, FiPhone, FiHome, FiDollarSign, FiCheckCircle, FiHeart, FiUsers, FiMapPin, FiGlobe, FiMenu, FiX, FiGithub, FiTwitter, FiLinkedin } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 
-const borrowerSchema = z.object({
-    name: z.string().min(1, "Name is required"),
-    email: z.string().email("Invalid email address"),
-    phone: z.string().min(10, "Phone number must be at least 10 digits"),
-    residenceType: z.enum(["Owned", "Rented", "Other"]),
-    monthlyIncome: z.number().min(1, "Monthly income must be greater than 0"),
-    previousLoan: z.enum(["Yes", "No"]),
-    maritalStatus: z.enum(["Single", "Married", "Divorced", "Widowed"]),
-    numberOfDependencies: z.number().min(0, "Number of dependencies cannot be negative"),
-    city: z.string().min(1, "City is required"),
-    state: z.string().min(1, "State is required"),
-});
-
-type BorrowerFormData = z.infer<typeof borrowerSchema>;
-
 type FormErrors = {
     [key: string]: string[];
-};
-
-type ApiError = {
-    message: string;
-    errors?: FormErrors;
 };
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <motion.nav 
-            initial={{ y: -100 }}
-            animate={{ y: 0 }}
-            className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-black/20 border-b border-white/10"
-        >
+        <motion.nav initial={{ y: -100 }} animate={{ y: 0 }} className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-black/20 border-b border-white/10">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex justify-between h-16">
-                    <div className="flex items-center">
-                        <motion.div 
-                            whileHover={{ scale: 1.05 }}
-                            className="flex-shrink-0 flex items-center"
-                        >
-                            <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
-                                <span className="text-white font-bold text-sm">L</span>
-                            </div>
-                            <span className="ml-2 text-white font-semibold text-lg">LoanFlow</span>
-                        </motion.div>
-                    </div>
-                    
-                    <div className="hidden md:flex items-center space-x-8">
-                        {['Home', 'About', 'Services', 'Contact'].map((item) => (
-                            <motion.a
-                                key={item}
-                                href="#"
-                                whileHover={{ scale: 1.05 }}
-                                className="text-white/80 hover:text-white transition-colors duration-200"
-                            >
+                <div className="flex justify-between items-center h-16">
+                    <motion.div whileHover={{ scale: 1.05 }} className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                        LoanCorp
+                    </motion.div>
+
+                    <div className="hidden md:flex space-x-8">
+                        {["Home", "About", "Services", "Contact"].map(item => (
+                            <motion.a key={item} href="#" whileHover={{ scale: 1.1 }} className="text-white/80 hover:text-white transition-colors duration-200">
                                 {item}
                             </motion.a>
                         ))}
                     </div>
 
-                    <div className="md:hidden flex items-center">
-                        <button
-                            onClick={() => setIsOpen(!isOpen)}
-                            className="text-white/80 hover:text-white"
-                        >
-                            {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
-                        </button>
-                    </div>
+                    <button onClick={() => setIsOpen(!isOpen)} className="md:hidden text-white/80 hover:text-white transition-colors">
+                        {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+                    </button>
                 </div>
             </div>
 
@@ -81,17 +40,12 @@ const Navbar = () => {
                 {isOpen && (
                     <motion.div
                         initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
+                        animate={{ opacity: 1, height: "auto" }}
                         exit={{ opacity: 0, height: 0 }}
-                        className="md:hidden backdrop-blur-xl bg-black/30 border-t border-white/10"
-                    >
-                        <div className="px-2 pt-2 pb-3 space-y-1">
-                            {['Home', 'About', 'Services', 'Contact'].map((item) => (
-                                <a
-                                    key={item}
-                                    href="#"
-                                    className="block px-3 py-2 text-white/80 hover:text-white transition-colors duration-200"
-                                >
+                        className="md:hidden backdrop-blur-xl bg-black/30 border-t border-white/10">
+                        <div className="px-4 py-4 space-y-4">
+                            {["Home", "About", "Services", "Contact"].map(item => (
+                                <a key={item} href="#" className="block text-white/80 hover:text-white transition-colors duration-200">
                                     {item}
                                 </a>
                             ))}
@@ -109,57 +63,49 @@ const Footer = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                     <div className="col-span-1 md:col-span-2">
-                        <div className="flex items-center mb-4">
-                            <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
-                                <span className="text-white font-bold text-sm">L</span>
-                            </div>
-                            <span className="ml-2 text-white font-semibold text-lg">LoanFlow</span>
-                        </div>
-                        <p className="text-white/60 mb-4">
-                            Empowering your financial journey with seamless loan applications and transparent processes.
-                        </p>
+                        <motion.div whileHover={{ scale: 1.05 }} className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-4">
+                            LoanCorp
+                        </motion.div>
+                        <p className="text-white/60 mb-6 max-w-md">Empowering your financial future with innovative lending solutions and personalized service.</p>
                         <div className="flex space-x-4">
-                            {[FiTwitter, FiLinkedin, FiGithub].map((Icon, index) => (
+                            {[FiGithub, FiTwitter, FiLinkedin].map((Icon, index) => (
                                 <motion.a
                                     key={index}
                                     href="#"
-                                    whileHover={{ scale: 1.1 }}
-                                    className="text-white/60 hover:text-white transition-colors duration-200"
-                                >
-                                    <Icon size={20} />
+                                    whileHover={{ scale: 1.2, rotate: 360 }}
+                                    whileTap={{ scale: 0.9 }}
+                                    className="w-10 h-10 rounded-full backdrop-blur-md bg-white/10 border border-white/20 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/20 transition-all duration-300">
+                                    <Icon size={18} />
                                 </motion.a>
                             ))}
                         </div>
                     </div>
-                    
+
                     <div>
                         <h3 className="text-white font-semibold mb-4">Quick Links</h3>
-                        <ul className="space-y-2">
-                            {['About Us', 'Services', 'Privacy Policy', 'Terms of Service'].map((item) => (
-                                <li key={item}>
-                                    <a href="#" className="text-white/60 hover:text-white transition-colors duration-200">
-                                        {item}
-                                    </a>
-                                </li>
+                        <div className="space-y-2">
+                            {["About Us", "Loan Types", "Apply Now", "FAQ"].map(item => (
+                                <motion.a key={item} href="#" whileHover={{ x: 5 }} className="block text-white/60 hover:text-white transition-all duration-200">
+                                    {item}
+                                </motion.a>
                             ))}
-                        </ul>
+                        </div>
                     </div>
-                    
+
                     <div>
-                        <h3 className="text-white font-semibold mb-4">Contact</h3>
-                        <ul className="space-y-2 text-white/60">
-                            <li>support@loanflow.com</li>
-                            <li>+1 (555) 123-4567</li>
-                            <li>123 Finance Street</li>
-                            <li>New York, NY 10001</li>
-                        </ul>
+                        <h3 className="text-white font-semibold mb-4">Support</h3>
+                        <div className="space-y-2">
+                            {["Help Center", "Contact Us", "Privacy Policy", "Terms of Service"].map(item => (
+                                <motion.a key={item} href="#" whileHover={{ x: 5 }} className="block text-white/60 hover:text-white transition-all duration-200">
+                                    {item}
+                                </motion.a>
+                            ))}
+                        </div>
                     </div>
                 </div>
-                
+
                 <div className="border-t border-white/10 mt-8 pt-8 text-center">
-                    <p className="text-white/60">
-                        © 2025 LoanFlow. All rights reserved.
-                    </p>
+                    <p className="text-white/40">© 2025 LoanCorp. All rights reserved.</p>
                 </div>
             </div>
         </footer>
@@ -201,7 +147,7 @@ export default function SignUpPage() {
             return response.json();
         },
         onSuccess: data => {
-            setSubmissionMessage("Sign-up successful! Welcome to LoanFlow!");
+            setSubmissionMessage("Sign-up successful! Data received: " + JSON.stringify(data.data));
             setErrors({});
             setFormData({
                 name: "",
@@ -246,7 +192,8 @@ export default function SignUpPage() {
         }
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e: React.MouseEvent) => {
+        e.preventDefault();
         setSubmissionMessage(null);
         setErrors({});
 
@@ -264,80 +211,89 @@ export default function SignUpPage() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
-            <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%239C92AC" fill-opacity="0.1"%3E%3Ccircle cx="30" cy="30" r="2"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
-            
-            <div className="absolute top-10 left-10 w-72 h-72 bg-purple-500/30 rounded-full blur-3xl"></div>
-            <div className="absolute bottom-10 right-10 w-96 h-96 bg-pink-500/20 rounded-full blur-3xl"></div>
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-blue-500/20 rounded-full blur-3xl"></div>
+        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-violet-900 relative overflow-hidden">
+            <div className="absolute inset-0">
+                <div className="absolute top-0 -left-4 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
+                <div className="absolute top-0 -right-4 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse animation-delay-2000"></div>
+                <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse animation-delay-4000"></div>
+            </div>
 
             <Navbar />
 
-            <div className="relative z-10 pt-24 pb-12 px-4">
-                <div className="max-w-6xl mx-auto">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
-                        className="text-center mb-12"
-                    >
-                        <h1 className="text-5xl md:text-6xl font-bold text-white mb-4">
-                            Join <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">LoanFlow</span>
-                        </h1>
-                        <p className="text-xl text-white/70 max-w-2xl mx-auto">
-                            Start your financial journey with us. Quick, secure, and transparent loan applications.
-                        </p>
-                    </motion.div>
-
-                    <div className="flex justify-center">
-                        <motion.div
-                            initial={{ opacity: 0, y: 50, scale: 0.9 }}
-                            animate={{ opacity: 1, y: 0, scale: 1 }}
-                            transition={{ duration: 0.7, delay: 0.2 }}
-                            className="backdrop-blur-xl bg-white/10 p-8 md:p-12 rounded-3xl shadow-2xl border border-white/20 w-full max-w-2xl"
-                        >
-                            <div className="text-center mb-8">
-                                <h2 className="text-3xl font-bold text-white mb-2">Create Your Account</h2>
-                                <p className="text-white/60">Fill in your details to get started</p>
-                            </div>
+            <div className="flex items-center justify-center pt-24 pb-12 px-4 relative z-10">
+                <motion.div
+                    initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-3xl shadow-2xl w-full max-w-2xl overflow-hidden">
+                    <div className="relative">
+                        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20"></div>
+                        <div className="relative p-8 sm:p-12">
+                            <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-center mb-8">
+                                <h1 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-white via-blue-200 to-purple-200 bg-clip-text text-transparent mb-4">Join LoanCorp</h1>
+                                <p className="text-white/70 text-lg">Start your financial journey with us today</p>
+                            </motion.div>
 
                             <div className="space-y-6">
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                     <InputField label="Full Name" name="name" icon={FiUser} formData={formData} handleChange={handleChange} errors={errors} />
                                     <InputField label="Email Address" name="email" type="email" icon={FiMail} formData={formData} handleChange={handleChange} errors={errors} />
                                 </div>
 
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                     <InputField label="Phone Number" name="phone" type="tel" icon={FiPhone} formData={formData} handleChange={handleChange} errors={errors} />
-                                    <InputField label="Residence Type" name="residenceType" icon={FiHome} options={["Owned", "Rented", "Other"]} formData={formData} handleChange={handleChange} errors={errors} />
+                                    <InputField
+                                        label="Residence Type"
+                                        name="residenceType"
+                                        icon={FiHome}
+                                        options={["Owned", "Rented", "Other"]}
+                                        formData={formData}
+                                        handleChange={handleChange}
+                                        errors={errors}
+                                    />
                                 </div>
 
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <InputField label="Monthly Income ($)" name="monthlyIncome" type="number" icon={FiDollarSign} formData={formData} handleChange={handleChange} errors={errors} />
-                                    <InputField label="Previous Loan History" name="previousLoan" icon={FiCheckCircle} options={["Yes", "No"]} formData={formData} handleChange={handleChange} errors={errors} />
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                    <InputField label="Monthly Income" name="monthlyIncome" type="number" icon={FiDollarSign} formData={formData} handleChange={handleChange} errors={errors} />
+                                    <InputField
+                                        label="Previous Loan"
+                                        name="previousLoan"
+                                        icon={FiCheckCircle}
+                                        options={["Yes", "No"]}
+                                        formData={formData}
+                                        handleChange={handleChange}
+                                        errors={errors}
+                                    />
                                 </div>
 
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <InputField label="Marital Status" name="maritalStatus" icon={FiHeart} options={["Single", "Married", "Divorced", "Widowed"]} formData={formData} handleChange={handleChange} errors={errors} />
-                                    <InputField label="Number of Dependents" name="numberOfDependencies" type="number" icon={FiUsers} formData={formData} handleChange={handleChange} errors={errors} />
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                    <InputField
+                                        label="Marital Status"
+                                        name="maritalStatus"
+                                        icon={FiHeart}
+                                        options={["Single", "Married", "Divorced", "Widowed"]}
+                                        formData={formData}
+                                        handleChange={handleChange}
+                                        errors={errors}
+                                    />
+                                    <InputField label="Dependencies" name="numberOfDependencies" type="number" icon={FiUsers} formData={formData} handleChange={handleChange} errors={errors} />
                                 </div>
 
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                     <InputField label="City" name="city" icon={FiMapPin} formData={formData} handleChange={handleChange} errors={errors} />
                                     <InputField label="State" name="state" icon={FiGlobe} formData={formData} handleChange={handleChange} errors={errors} />
                                 </div>
 
                                 <motion.button
-                                    whileHover={{ scale: 1.02, boxShadow: "0 20px 40px rgba(168, 85, 247, 0.4)" }}
+                                    whileHover={{ scale: 1.02, boxShadow: "0 20px 40px -12px rgba(147, 51, 234, 0.4)" }}
                                     whileTap={{ scale: 0.98 }}
                                     onClick={handleSubmit}
-                                    className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-4 px-8 rounded-2xl font-semibold text-lg shadow-lg hover:shadow-purple-500/25 focus:outline-none focus:ring-4 focus:ring-purple-500/50 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                                    disabled={mutation.isPending}
-                                >
+                                    className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 px-8 rounded-2xl font-semibold text-lg shadow-lg hover:shadow-2xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed backdrop-blur-sm"
+                                    disabled={mutation.isPending}>
                                     {mutation.isPending ? (
-                                        <div className="flex items-center justify-center">
-                                            <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mr-3"></div>
-                                            Processing...
+                                        <div className="flex items-center justify-center space-x-2">
+                                            <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                                            <span>Processing...</span>
                                         </div>
                                     ) : (
                                         "Create Account"
@@ -350,20 +306,17 @@ export default function SignUpPage() {
                                             initial={{ opacity: 0, y: 10 }}
                                             animate={{ opacity: 1, y: 0 }}
                                             exit={{ opacity: 0, y: -10 }}
-                                            className={`p-4 rounded-xl text-center font-medium ${
-                                                submissionMessage.includes("successful") 
-                                                    ? "bg-green-500/20 text-green-300 border border-green-500/30" 
-                                                    : "bg-red-500/20 text-red-300 border border-red-500/30"
-                                            }`}
-                                        >
+                                            className={`p-4 rounded-xl backdrop-blur-md border ${
+                                                submissionMessage.includes("successful") ? "bg-green-500/20 border-green-500/30 text-green-200" : "bg-red-500/20 border-red-500/30 text-red-200"
+                                            }`}>
                                             {submissionMessage}
                                         </motion.div>
                                     )}
                                 </AnimatePresence>
                             </div>
-                        </motion.div>
+                        </div>
                     </div>
-                </div>
+                </motion.div>
             </div>
 
             <Footer />
@@ -383,19 +336,14 @@ type InputFieldProps = {
 };
 
 const InputField = ({ label, name, type = "text", icon: Icon, options, formData, handleChange, errors }: InputFieldProps) => (
-    <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="space-y-2"
-    >
+    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="space-y-2">
         <label htmlFor={name} className="block text-sm font-medium text-white/90">
             {label}
         </label>
-        <div className="relative">
+        <div className="relative group">
             {Icon && (
-                <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
-                    <Icon className="h-5 w-5 text-white/50" />
+                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 z-10">
+                    <Icon className="h-5 w-5 text-white/50 group-focus-within:text-white/80 transition-colors duration-200" />
                 </div>
             )}
             {options ? (
@@ -404,12 +352,11 @@ const InputField = ({ label, name, type = "text", icon: Icon, options, formData,
                     name={name}
                     value={formData[name] as string}
                     onChange={handleChange}
-                    className={`w-full backdrop-blur-sm bg-white/10 border border-white/20 rounded-xl py-3 pr-4 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all duration-300 ${
+                    className={`block w-full rounded-xl backdrop-blur-md bg-white/10 border border-white/20 py-3 pr-4 text-white placeholder-white/50 focus:border-blue-400/50 focus:ring-2 focus:ring-blue-400/20 focus:outline-none transition-all duration-200 hover:bg-white/15 ${
                         Icon ? "pl-12" : "pl-4"
-                    } ${errors[name] ? "border-red-400/50 focus:ring-red-400/50" : ""}`}
-                >
+                    }`}>
                     {options.map(option => (
-                        <option key={option} value={option} className="bg-gray-800 text-white">
+                        <option key={option} value={option} className="bg-gray-900 text-white">
                             {option}
                         </option>
                     ))}
@@ -421,9 +368,9 @@ const InputField = ({ label, name, type = "text", icon: Icon, options, formData,
                     name={name}
                     value={formData[name] as string | number}
                     onChange={handleChange}
-                    className={`w-full backdrop-blur-sm bg-white/10 border border-white/20 rounded-xl py-3 pr-4 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all duration-300 ${
+                    className={`block w-full rounded-xl backdrop-blur-md bg-white/10 border border-white/20 py-3 pr-4 text-white placeholder-white/50 focus:border-blue-400/50 focus:ring-2 focus:ring-blue-400/20 focus:outline-none transition-all duration-200 hover:bg-white/15 ${
                         Icon ? "pl-12" : "pl-4"
-                    } ${errors[name] ? "border-red-400/50 focus:ring-red-400/50" : ""}`}
+                    }`}
                     placeholder={`Enter your ${label.toLowerCase()}`}
                 />
             )}
@@ -434,9 +381,7 @@ const InputField = ({ label, name, type = "text", icon: Icon, options, formData,
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    className="text-red-400 text-sm flex items-center"
-                >
-                    <span className="w-4 h-4 mr-1">⚠</span>
+                    className="text-sm text-red-300 bg-red-500/10 border border-red-500/20 rounded-lg p-2 backdrop-blur-sm">
                     {errors[name][0]}
                 </motion.p>
             )}
