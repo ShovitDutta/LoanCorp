@@ -1,11 +1,10 @@
 "use client";
-
+import { z } from "zod";
 import React, { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { z } from "zod";
+import { motion, AnimatePresence } from "framer-motion";
 import { borrowerSchema, BorrowerFormData, ApiError } from "@/lib/schemas";
 import { FiUser, FiMail, FiPhone, FiHome, FiDollarSign, FiCheckCircle, FiHeart, FiUsers, FiMapPin, FiGlobe, FiMenu, FiX, FiGithub, FiTwitter, FiLinkedin } from "react-icons/fi";
-import { motion, AnimatePresence } from "framer-motion";
 
 type FormErrors = {
     [key: string]: string[];
@@ -18,7 +17,7 @@ const Navbar = () => {
         <motion.nav initial={{ y: -100 }} animate={{ y: 0 }} className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-black/20 border-b border-white/10">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-16">
-                    <motion.div whileHover={{ scale: 1.05 }} className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                    <motion.div whileHover={{ scale: 1.05 }} className="text-2xl font-bold bg-gradient-to-r from-red-400 to-orange-400 bg-clip-text text-transparent">
                         LoanCorp
                     </motion.div>
 
@@ -63,7 +62,7 @@ const Footer = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                     <div className="col-span-1 md:col-span-2">
-                        <motion.div whileHover={{ scale: 1.05 }} className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-4">
+                        <motion.div whileHover={{ scale: 1.05 }} className="text-2xl font-bold bg-gradient-to-r from-red-400 to-orange-400 bg-clip-text text-transparent mb-4">
                             LoanCorp
                         </motion.div>
                         <p className="text-white/60 mb-6 max-w-md">Empowering your financial future with innovative lending solutions and personalized service.</p>
@@ -211,10 +210,10 @@ export default function SignUpPage() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-violet-900 relative overflow-hidden">
+        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-orange-900 to-violet-900 relative overflow-hidden">
             <div className="absolute inset-0">
-                <div className="absolute top-0 -left-4 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
-                <div className="absolute top-0 -right-4 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse animation-delay-2000"></div>
+                <div className="absolute top-0 -left-4 w-72 h-72 bg-orange-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
+                <div className="absolute top-0 -right-4 w-72 h-72 bg-red-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse animation-delay-2000"></div>
                 <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse animation-delay-4000"></div>
             </div>
 
@@ -227,10 +226,10 @@ export default function SignUpPage() {
                     transition={{ duration: 0.8, ease: "easeOut" }}
                     className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-3xl shadow-2xl w-full max-w-2xl overflow-hidden">
                     <div className="relative">
-                        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20"></div>
+                        <div className="absolute inset-0 bg-gradient-to-r from-red-600/20 to-orange-600/20"></div>
                         <div className="relative p-8 sm:p-12">
                             <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-center mb-8">
-                                <h1 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-white via-blue-200 to-purple-200 bg-clip-text text-transparent mb-4">Join LoanCorp</h1>
+                                <h1 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-white via-red-200 to-orange-200 bg-clip-text text-transparent mb-4">Join LoanCorp</h1>
                                 <p className="text-white/70 text-lg">Start your financial journey with us today</p>
                             </motion.div>
 
@@ -288,7 +287,7 @@ export default function SignUpPage() {
                                     whileHover={{ scale: 1.02, boxShadow: "0 20px 40px -12px rgba(147, 51, 234, 0.4)" }}
                                     whileTap={{ scale: 0.98 }}
                                     onClick={handleSubmit}
-                                    className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 px-8 rounded-2xl font-semibold text-lg shadow-lg hover:shadow-2xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed backdrop-blur-sm"
+                                    className="w-full bg-gradient-to-r from-red-600 to-orange-600 text-white py-4 px-8 rounded-2xl font-semibold text-lg shadow-lg hover:shadow-2xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed backdrop-blur-sm"
                                     disabled={mutation.isPending}>
                                     {mutation.isPending ? (
                                         <div className="flex items-center justify-center space-x-2">
@@ -352,7 +351,7 @@ const InputField = ({ label, name, type = "text", icon: Icon, options, formData,
                     name={name}
                     value={formData[name] as string}
                     onChange={handleChange}
-                    className={`block w-full rounded-xl backdrop-blur-md bg-white/10 border border-white/20 py-3 pr-4 text-white placeholder-white/50 focus:border-blue-400/50 focus:ring-2 focus:ring-blue-400/20 focus:outline-none transition-all duration-200 hover:bg-white/15 ${
+                    className={`block w-full rounded-xl backdrop-blur-md bg-white/10 border border-white/20 py-3 pr-4 text-white placeholder-white/50 focus:border-red-400/50 focus:ring-2 focus:ring-red-400/20 focus:outline-none transition-all duration-200 hover:bg-white/15 ${
                         Icon ? "pl-12" : "pl-4"
                     }`}>
                     {options.map(option => (
@@ -368,7 +367,7 @@ const InputField = ({ label, name, type = "text", icon: Icon, options, formData,
                     name={name}
                     value={formData[name] as string | number}
                     onChange={handleChange}
-                    className={`block w-full rounded-xl backdrop-blur-md bg-white/10 border border-white/20 py-3 pr-4 text-white placeholder-white/50 focus:border-blue-400/50 focus:ring-2 focus:ring-blue-400/20 focus:outline-none transition-all duration-200 hover:bg-white/15 ${
+                    className={`block w-full rounded-xl backdrop-blur-md bg-white/10 border border-white/20 py-3 pr-4 text-white placeholder-white/50 focus:border-red-400/50 focus:ring-2 focus:ring-red-400/20 focus:outline-none transition-all duration-200 hover:bg-white/15 ${
                         Icon ? "pl-12" : "pl-4"
                     }`}
                     placeholder={`Enter your ${label.toLowerCase()}`}
