@@ -14,6 +14,11 @@
 ![Keras Tuner](https://img.shields.io/badge/Keras_Tuner-D00000?style=for-the-badge&logo=keras&logoColor=white)
 ![Optuna](https://img.shields.io/badge/Optuna-000000?style=for-the-badge&logo=optuna&logoColor=white)
 ![SentenceTransformers](https://img.shields.io/badge/SentenceTransformers-000000?style=for-the-badge&logo=huggingface&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white)
+![NumPy](https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white)
+![Scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)
+![Hugging Face](https://img.shields.io/badge/Hugging_Face-FFD21C?style=for-the-badge&logo=huggingface&logoColor=black)
+![Transformers](https://img.shields.io/badge/Transformers-FFD21C?style=for-the-badge&logo=huggingface&logoColor=black)
 ![License](https://img.shields.io/badge/License-UNLICENSED-red.svg)
 
 ## Project Overview
