@@ -1,5 +1,5 @@
 IN DEPTH PLAN (strip technical for now)
-
+https://github.com/ShovitDutta/LoanCorp
 
 ### Project Overview
 
@@ -64,5 +64,3 @@ Once Our Model Is Trained, We'll Dig Into Its Workings To Understand What Factor
 ### Why This Rocks
 
 This Model, Now Enhanced By LLM Capabilities, Will Provide Fast And Accurate, Data-Driven Predictions, Making The Lending Process Smoother And Helping To Reduce Risks By Understanding Nuances From Text. For This Trial, It's A Great Way To Showcase Our Technical Capabilities And Demonstrate How Multi-Modal Data (Numerical, Categorical, And Text) Can Be Leveraged; In The Long Run, It Could Truly Change How Efficiently We Manage Lending!
-
-Do You Have Any Questions About The Specific LLM Techniques We Plan To Employ?
