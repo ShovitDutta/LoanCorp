@@ -1,5 +1,21 @@
 # LoanCorp
 
+![Next.js](https://img.shields.io/badge/Next.js-black?style=for-the-badge&logo=next.js&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Drizzle ORM](https://img.shields.io/badge/Drizzle_ORM-40B8A0?style=for-the-badge&logo=drizzle&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![NextAuth.js](https://img.shields.io/badge/NextAuth.js-black?style=for-the-badge&logo=next.js&logoColor=white)
+![Zod](https://img.shields.io/badge/Zod-3E67B1?style=for-the-badge&logo=zod&logoColor=white)
+![Zustand](https://img.shields.io/badge/Zustand-20232A?style=for-the-badge&logo=zustand&logoColor=white)
+![TanStack Query](https://img.shields.io/badge/TanStack_Query-FF4154?style=for-the-badge&logo=react-query&logoColor=white)
+![Keras](https://img.shields.io/badge/Keras-D00000?style=for-the-badge&logo=keras&logoColor=white)
+![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)
+![Keras Tuner](https://img.shields.io/badge/Keras_Tuner-D00000?style=for-the-badge&logo=keras&logoColor=white)
+![Optuna](https://img.shields.io/badge/Optuna-000000?style=for-the-badge&logo=optuna&logoColor=white)
+![SentenceTransformers](https://img.shields.io/badge/SentenceTransformers-000000?style=for-the-badge&logo=huggingface&logoColor=white)
+![License](https://img.shields.io/badge/License-UNLICENSED-red.svg)
+
 ## Project Overview
 
 LoanCorp is a project aimed at building a smart model to accurately predict a borrower's capacity to borrow. It leverages a detailed dataset on potential borrowers, including residence type, monthly income, previous loan history, marital status, number of dependents, city, state, and additional textual data. The project integrates both a Node.js application for handling borrower data and a Python-based machine learning pipeline for predictive modeling.
