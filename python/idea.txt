@@ -1,0 +1,68 @@
+IN DEPTH PLAN (strip technical for now)
+
+
+### Project Overview
+
+We've Got A Detailed Dataset On Potential Borrowers, Packed With Key Information:
+
+- Residence Type: Where They Live (e.g., Owned, Rented).
+- Monthly Income: How Much They Earn.
+- Previous Loan History: Have They Taken Loans Before, And How Did That Go?
+- Marital Status: Are They Single, Married, Etc.?
+- Number Of Dependents: How Many People Rely On Their Income.
+- City And State: Their Geographical Location.
+- Additional Textual Data: This Is New! Could Include Applicant's Self-Declared Financial Goals, Loan Purpose Descriptions, Or Call Center Interaction Notes.
+
+We'll Be Skipping Non-Predictive Details Like Names, Emails, And Phone Numbers — They Don't Help Us Find Patterns.
+
+
+
+### Proposed Solution
+
+Our Main Goal Is To Build A Smart Model That Can Accurately Predict A Borrower's Capacity To Borrow By Finding Hidden Relationships In This Data, Now Potentially Enriched By LLM Capabilities. Here's Our Plan:
+
+========= 1. Data Preparation
+
+First, We Need To Get The Data Squeaky Clean And Ready For Our Models:
+
+- Drop Unnecessary Features: We'll Remove Fields Like Name And Email Because They Don't Help Us See Trends.
+- Handle Missing Data: If There Are Gaps In The Data (like Someone's Income Not Being Listed), We'll Fill Those In Using Smart Methods, Like Using The Average Income For Similar People, Or We'll Remove Records That Are Too Incomplete.
+- Encode Categorical Variables: For Things Like "Residence Type" Or "Marital Status," Which Aren't Numbers, We'll Convert Them Into A Numerical Format That Our Models Can Understand, Using A Method Called One-Hot Encoding.
+- Scale Numerical Features: We'll Adjust Numerical Data Like Income And Number Of Dependents So They're On A Similar Scale. This Helps Our Models Learn More Effectively And Prevents One Large Number From Dominating The Analysis.
+- LLM-Driven Text Feature Engineering:
+    - For Additional Textual Data (e.g., Loan Purpose Descriptions, User Notes), We'll Leverage Pre-Trained LLMs.
+    - Embeddings: Generate Dense Vector Representations (Embeddings) Of Text Using Models Like SentenceTransformers (BERT/RoBERTa Variants) Or Specialized Financial Language Models. These Embeddings Capture Semantic Meaning.
+    - Sentiment Analysis: Use An LLM To Extract Sentiment (Positive, Negative, Neutral) From Textual Data, Potentially Indicating Applicant's Confidence Or Risk.
+    - Keyword/Topic Extraction: Identify Key Phrases Or Topics Discussed, e.g., "Debt Consolidation," "Home Improvement," "Emergency."
+    - These Generated Features (Embeddings, Sentiment Scores, Topic Flags) Will Be Added To Our Main Numerical/Categorical Dataset.
+
+
+
+========= 2. Model Development
+
+We're Going To Try Out Two Powerful Approaches To Build Our Prediction Model:
+
+- Keras With Keras Tuner: We'll Build A Neural Network (Think Of It As A Complex, Adaptable System That Learns From Data) Using Keras. This Network Will Now Consume The Original Features Plus The LLM-Generated Features. Then, We'll Use Keras Tuner To Automatically Fine-Tune Its Internal Settings, Like How Many Layers It Has, How Many "Neurons" Are In Each Layer, And How Fast It Learns. This Ensures We Get The Best Possible Predictions.
+- PyTorch With Optuna: As An Alternative, We'll Also Create A Neural Network In PyTorch. This Network Will Also Integrate The LLM-Derived Features. Here, We'll Use Optuna To Optimize Different Aspects Of The Network, Such As The Size Of Its Layers, How Much "Dropout" To Apply (Which Helps Prevent The Model From Memorizing The Training Data), And How The Model's "Optimizer" Settings Are Configured. This Aims For Peak Performance.
+
+Before Training, We'll Split Our Data: 80% Will Be Used To Teach The Model, And The Remaining 20% Will Be Used To Test How Well It Performs On Unseen Data.
+
+
+
+========= 3. Evaluation
+
+To Measure How Good Our Predictions Are, We'll Use A Metric Called Mean Squared Error (MSE) On Our Test Data. This Tells Us, On Average, How Close Our Predictions Are To The Actual Borrowing Capacities. We'll Compare The Performance Of The Keras Model Against The PyTorch Model (Both Now Benefiting From LLM Features) To Pick The Ultimate Winner.
+
+
+
+========= 4. Insights And Interpretability
+
+Once Our Model Is Trained, We'll Dig Into Its Workings To Understand What Factors Most Influence Borrowing Capacity. For Example, We'll Identify If Income, Location, Past Loan History, Or The Insights Derived From The Textual Data By The LLM Are The Biggest Drivers. This Will Give Us Valuable Insights For Creating Smarter Lending Strategies And Policies.
+
+
+
+### Why This Rocks
+
+This Model, Now Enhanced By LLM Capabilities, Will Provide Fast And Accurate, Data-Driven Predictions, Making The Lending Process Smoother And Helping To Reduce Risks By Understanding Nuances From Text. For This Trial, It's A Great Way To Showcase Our Technical Capabilities And Demonstrate How Multi-Modal Data (Numerical, Categorical, And Text) Can Be Leveraged; In The Long Run, It Could Truly Change How Efficiently We Manage Lending!
+
+Do You Have Any Questions About The Specific LLM Techniques We Plan To Employ?
